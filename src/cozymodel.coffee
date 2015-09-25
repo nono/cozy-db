@@ -180,9 +180,9 @@ cozyRequestsAdapter =
                   }
                 }
             """
-        console.log "DEFINING", path, view
         path = "request/#{docType}/#{name.toLowerCase()}/"
         client.put path, view, (error, response, body) ->
+            console.log "DEFINING", path, view, error, response.statusCode, body
             checkError error, response, body, 200, callback
 
     run: (name, params, callback) ->
@@ -191,7 +191,7 @@ cozyRequestsAdapter =
 
         path = "request/#{docType}/#{name.toLowerCase()}/"
         client.post path, params, (error, response, body) ->
-            console.log "REQUESTING", error, response, body
+            console.log "REQUESTING", path, error, response.statusCode, body
             if error
                 callback error
             else if response.statusCode isnt 200

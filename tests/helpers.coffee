@@ -10,7 +10,9 @@ exports.createDoc = (data, callback) ->
         CozyAdapter.CozyModel.db.post data, (err, info) ->
             callback err, _id: info?.id
     else # DS
+        console.log "CREATE DOC DS", data
         client.post '/data/', data, (err, res, created) ->
+            console.log "CREATED ", created
             callback err, created
 
 exports.deleteDoc = (id, callback) ->
@@ -23,7 +25,9 @@ exports.deleteDoc = (id, callback) ->
             else
                 CozyAdapter.CozyModel.db.remove doc, callback
     else # DS
-        client.del "/data/#{id}/", (err) ->
+        console.log "DELETE DOC DS", data
+        client.del "/data/#{id}/", (err, res, body) ->
+            console.log "DELETED", err, res.statusCode, body
             callback err
 
 exports.clearDocType = (doctype) -> (callback) ->
